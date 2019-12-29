@@ -12,12 +12,12 @@ import withErrorHandler from '../../withErrorHandler/WithErrorHandler';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.7
-};
+// const INGREDIENT_PRICES = {
+//     salad: 0.5,
+//     cheese: 0.4,
+//     meat: 1.3,
+//     bacon: 0.7
+// };
 
 class BurgerBuilder extends Component {
     // constructor(props) {
@@ -125,7 +125,7 @@ class BurgerBuilder extends Component {
             queryParams.push(encodeURIComponent(igkey) + "=" + encodeURIComponent(this.props.ings[igkey]))
         }
 
-        queryParams.push("price=" + this.state.totalPrice);
+        queryParams.push("price=" + this.props.totalPrice);
 
         // console.log(queryParams);
         const queryString = queryParams.join("&")
@@ -164,12 +164,12 @@ class BurgerBuilder extends Component {
                         disabled={disabledInfo}
                         purchasable={this.state.purchasable}
                         ordered={this.purchaseHandler}
-                        price={this.state.totalPrice} />
+                        price={this.props.totalPrice} />
                 </Aux>
             )
             orderSummary = <OrderSummary
                 ingredients={this.props.ings}
-                price={this.state.totalPrice}
+                price={this.props.totalPrice}
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler} />
         }
@@ -192,7 +192,8 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients
+        ings: state.ingredients,
+        totalPrice: state.totalPrice
     }
 }
 
