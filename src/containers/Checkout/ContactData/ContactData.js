@@ -3,6 +3,7 @@ import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.css';
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import { connect } from 'react-redux';
 
 class ContactData extends Component {
 
@@ -22,8 +23,8 @@ class ContactData extends Component {
         console.log(this.props);
         this.setState({ loading: true });
         const order = {
-            ingredients: this.props.ingredients,
-            price: Number.parseFloat(this.props.totalPrice).toFixed(2),
+            ingredients: this.props.ings,
+            price: Number.parseFloat(this.props.price).toFixed(2),
             customer: {
                 name: 'Clover',
                 address: {
@@ -75,4 +76,11 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);
